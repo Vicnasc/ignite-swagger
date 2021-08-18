@@ -1,0 +1,141 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Desafio 05 - Swagger",
+    "description": "This is an API for challenge 05",
+    "version": "1.0.0",
+    "contact": {
+      "email": "teste@teste.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["User"],
+        "description": "List all users",
+        "responses": {
+          "200": {
+            "description": "Return a list of all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "Fulano"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "fulano@teste.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error in retrieving the list"
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "description": "Create a new user",
+        "requestBody": {
+          "description": "User parameters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Fulano"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "fulano@teste.com"
+                  }
+                }
+              }
+            },
+            "examples": [
+              {
+                "name": "Fulano",
+                "email": "fulano@teste.com"
+              }
+            ]
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User created with success"
+          },
+          "400": {
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "description": "Show a user by id",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User id to show",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["name", "email"],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Fulano"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "fulano@teste.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User doesn't exist"
+          }
+        }
+      }
+    },
+    "/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "description": "Turn user admin",
+        "responses": {
+          "200": {
+            "description": "User is now admin"
+          },
+          "400": {
+            "description": "User doesn't exist"
+          }
+        }
+      }
+    }
+  }
+}

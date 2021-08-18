@@ -1,5 +1,5 @@
-import { User } from "../../model/User";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
+import { User } from '../../model/User';
+import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
   name: string;
@@ -11,6 +11,11 @@ class CreateUserUseCase {
 
   execute({ email, name }: IRequest): User {
     // Complete aqui
+    const findIfEmailIsUsed = this.usersRepository.findByEmail(email);
+
+    if (!findIfEmailIsUsed) return this.usersRepository.create({ name, email });
+
+    throw new Error('Email not available');
   }
 }
 
